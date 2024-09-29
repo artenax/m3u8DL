@@ -1,246 +1,168 @@
-# N_m3u8DL-RE
+# m3u8DL
 Cross-platform DASH/HLS/MSS download tool. Supports on-demand and live streaming (DASH/HLS).
-
-[![img](https://img.shields.io/github/stars/nilaoda/N_m3u8DL-RE?label=%E7%82%B9%E8%B5%9E)](https://github.com/nilaoda/N_m3u8DL-RE)  [![img](https://img.shields.io/github/last-commit/nilaoda/N_m3u8DL-RE?label=%E6%9C%80%E8%BF%91%E6%8F%90%E4%BA%A4)](https://github.com/nilaoda/N_m3u8DL-RE)  [![img](https://img.shields.io/github/release/nilaoda/N_m3u8DL-RE?label=%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC)](https://github.com/nilaoda/N_m3u8DL-RE/releases)  [![img](https://img.shields.io/github/license/nilaoda/N_m3u8DL-RE?label=%E8%AE%B8%E5%8F%AF%E8%AF%81)](https://github.com/nilaoda/N_m3u8DL-RE)   [![img](https://img.shields.io/github/downloads/nilaoda/N_m3u8DL-RE/total?label=%E4%B8%8B%E8%BD%BD%E9%87%8F)](https://github.com/nilaoda/N_m3u8DL-RE/releases)
 
 If you encounter a bug, first check if the software is the latest version (if it is a Release version, we recommend downloading the latest autobuild version from the [Actions](https://github.com/nilaoda/N_m3u8DL-RE/actions) page to see if the problem has been fixed). If you make sure the version is up to date and the problem still exists, you can go to the [Issues](https://github.com/nilaoda/N_m3u8DL-RE/issues) section to see if anyone else has encountered it, and then ask again if no one has mentioned your problem.
 
 ---
 
-Terminal in older Windows versions, may not support this program, alternative: run it in [cmder](https://github.com/cmderdev/cmder).
-
-Arch Linux package is available from AUR：[n-m3u8dl-re-bin](https://aur.archlinux.org/packages/n-m3u8dl-re-bin)、[n-m3u8dl-re-git](https://aur.archlinux.org/packages/n-m3u8dl-re-git)
-
+Terminal in older Windows versions, may not support this program, alternative: run it in [cmder](https://github.com/cmderdev/cmder).   
+Arch Linux package is available from AUR: [n-m3u8dl-re-bin](https://aur.archlinux.org/packages/n-m3u8dl-re-bin), [n-m3u8dl-re-git](https://aur.archlinux.org/packages/n-m3u8dl-re-git)
+.
 ```bash
-# Arch Linux 及其衍生版安装 N_m3u8DL-RE 发行版 (该源非本人维护)
+# Arch Linux (binary)
 yay -Syu n-m3u8dl-re-bin
 
-# Arch Linux 及其衍生版安装 N_m3u8DL-RE 开发版 (该源非本人维护)
+# Arch Linux (build from source code)
 yay -Syu n-m3u8dl-re-git
 ```
 ---
 
-# 命令行参数
+# Command line options
 ```
 Description:
   N_m3u8DL-RE (Beta version) 20240630
 
 Usage:
-  N_m3u8DL-RE <input> [options]
+  m3u8DL <input> [options]
 
 Arguments:
-  <input>  链接或文件
+  <input>  Input Url or File
 
 Options:
-  --tmp-dir <tmp-dir>                      设置临时文件存储目录
-  --save-dir <save-dir>                    设置输出目录
-  --save-name <save-name>                  设置保存文件名
-  --base-url <base-url>                    设置BaseURL
-  --thread-count <number>                  设置下载线程数 [default: 本机CPU线程数]
-  --download-retry-count <number>          每个分片下载异常时的重试次数 [default: 3]
-  --force-ansi-console                     强制认定终端为支持ANSI且可交互的终端
-  --no-ansi-color                          去除ANSI颜色
-  --auto-select                            自动选择所有类型的最佳轨道 [default: False]
-  --skip-merge                             跳过合并分片 [default: False]
-  --skip-download                          跳过下载 [default: False]
-  --check-segments-count                   检测实际下载的分片数量和预期数量是否匹配 [default: True]
-  --binary-merge                           二进制合并 [default: False]
-  --use-ffmpeg-concat-demuxer              使用 ffmpeg 合并时，使用 concat 分离器而非 concat 协议 [default: False]
-  --del-after-done                         完成后删除临时文件 [default: True]
-  --no-date-info                           混流时不写入日期信息 [default: False]
-  --no-log                                 关闭日志文件输出 [default: False]
-  --write-meta-json                        解析后的信息是否输出json文件 [default: True]
-  --append-url-params                      将输入Url的Params添加至分片, 对某些网站很有用, 例如 kakao.com [default: False]
-  -mt, --concurrent-download               并发下载已选择的音频、视频和字幕 [default: False]
-  -H, --header <header>                    为HTTP请求设置特定的请求头, 例如:
+  --tmp-dir <tmp-dir>                      Set temporary file directory
+  --save-dir <save-dir>                    Set output directory
+  --save-name <save-name>                  Set output filename
+  --base-url <base-url>                    Set BaseURL
+  --thread-count <number>                  Set download thread count [default: 2]
+  --download-retry-count <number>          The number of retries when download segment error [default: 3]
+  --force-ansi-console                     Force assuming the terminal is ANSI-compatible and interactive
+  --no-ansi-color                          Remove ANSI colors
+  --auto-select                            Automatically selects the best tracks of all types [default: False]
+  --skip-merge                             Skip segments merge [default: False]
+  --skip-download                          Skip download [default: False]
+  --check-segments-count                   Check if the actual number of segments downloaded matches the expected number 
+                                           [default: True]
+  --binary-merge                           Binary merge [default: False]
+  --use-ffmpeg-concat-demuxer              When merging with ffmpeg, use the concat demuxer instead of the concat protocol 
+                                           [default: False]
+  --del-after-done                         Delete temporary files when done [default: True]
+  --no-date-info                           Date information is not written during muxing [default: False]
+  --no-log                                 Disable log file output [default: False]
+  --write-meta-json                        Write meta json after parsed [default: True]
+  --append-url-params                      Add Params of input Url to segments, useful for some websites, such as kakao.com 
+                                           [default: False]
+  -mt, --concurrent-download               Concurrently download the selected audio, video and subtitles [default: False]
+  -H, --header <header>                    Pass custom header(s) to server, Example:
                                            -H "Cookie: mycookie" -H "User-Agent: iOS"
-  --sub-only                               只选取字幕轨道 [default: False]
-  --sub-format <SRT|VTT>                   字幕输出类型 [default: SRT]
-  --auto-subtitle-fix                      自动修正字幕 [default: True]
-  --ffmpeg-binary-path <PATH>              ffmpeg可执行程序全路径, 例如 C:\Tools\ffmpeg.exe
-  --log-level <DEBUG|ERROR|INFO|OFF|WARN>  设置日志级别 [default: INFO]
-  --ui-language <en-US|zh-CN|zh-TW>        设置UI语言
-  --urlprocessor-args <urlprocessor-args>  此字符串将直接传递给URL Processor
-  --key <key>                              设置解密密钥, 程序调用mp4decrpyt/shaka-packager进行解密. 格式:
+  --sub-only                               Select only subtitle tracks [default: False]
+  --sub-format <SRT|VTT>                   Subtitle output format [default: SRT]
+  --auto-subtitle-fix                      Automatically fix subtitles [default: True]
+  --ffmpeg-binary-path <PATH>              Full path to the ffmpeg binary, like C:\Tools\ffmpeg.exe
+  --log-level <DEBUG|ERROR|INFO|OFF|WARN>  Set log level [default: INFO]
+  --ui-language <en-US|zh-CN|zh-TW>        Set UI language
+  --urlprocessor-args <urlprocessor-args>  Give these arguments to the URL Processors.
+  --key <key>                              Pass decryption key(s) to mp4decrypt/shaka-packager. format:
                                            --key KID1:KEY1 --key KID2:KEY2
-  --key-text-file <key-text-file>          设置密钥文件,程序将从文件中按KID搜寻KEY以解密.(不建议使用特大文件)
-  --decryption-binary-path <PATH>          MP4解密所用工具的全路径, 例如 C:\Tools\mp4decrypt.exe
-  --use-shaka-packager                     解密时使用shaka-packager替代mp4decrypt [default: False]
-  --mp4-real-time-decryption               实时解密MP4分片 [default: False]
-  -R, --max-speed <SPEED>                  设置限速，单位支持 Mbps 或 Kbps，如：15M 100K
-  -M, --mux-after-done <OPTIONS>           所有工作完成时尝试混流分离的音视频. 输入 "--morehelp mux-after-done" 以查看详细信息
-  --custom-hls-method <METHOD>             指定HLS加密方式 (AES_128|AES_128_ECB|CENC|CHACHA20|NONE|SAMPLE_AES|SAMPLE_AES_CTR|UNKNOWN)
-  --custom-hls-key <FILE|HEX|BASE64>       指定HLS解密KEY. 可以是文件, HEX或Base64
-  --custom-hls-iv <FILE|HEX|BASE64>        指定HLS解密IV. 可以是文件, HEX或Base64
-  --use-system-proxy                       使用系统默认代理 [default: True]
-  --custom-proxy <URL>                     设置请求代理, 如 http://127.0.0.1:8888
-  --custom-range <RANGE>                   仅下载部分分片. 输入 "--morehelp custom-range" 以查看详细信息
-  --task-start-at <yyyyMMddHHmmss>         在此时间之前不会开始执行任务
-  --live-perform-as-vod                    以点播方式下载直播流 [default: False]
-  --live-real-time-merge                   录制直播时实时合并 [default: False]
-  --live-keep-segments                     录制直播并开启实时合并时依然保留分片 [default: True]
-  --live-pipe-mux                          录制直播并开启实时合并时通过管道+ffmpeg实时混流到TS文件 [default: False]
-  --live-fix-vtt-by-audio                  通过读取音频文件的起始时间修正VTT字幕 [default: False]
-  --live-record-limit <HH:mm:ss>           录制直播时的录制时长限制
-  --live-wait-time <SEC>                   手动设置直播列表刷新间隔
-  --live-take-count <NUM>                  手动设置录制直播时首次获取分片的数量 [default: 16]
-  --mux-import <OPTIONS>                   混流时引入外部媒体文件. 输入 "--morehelp mux-import" 以查看详细信息
-  -sv, --select-video <OPTIONS>            通过正则表达式选择符合要求的视频流. 输入 "--morehelp select-video" 以查看详细信息
-  -sa, --select-audio <OPTIONS>            通过正则表达式选择符合要求的音频流. 输入 "--morehelp select-audio" 以查看详细信息
-  -ss, --select-subtitle <OPTIONS>         通过正则表达式选择符合要求的字幕流. 输入 "--morehelp select-subtitle" 以查看详细信息
-  -dv, --drop-video <OPTIONS>              通过正则表达式去除符合要求的视频流.
-  -da, --drop-audio <OPTIONS>              通过正则表达式去除符合要求的音频流.
-  -ds, --drop-subtitle <OPTIONS>           通过正则表达式去除符合要求的字幕流.
-  --ad-keyword <REG>                       设置广告分片的URL关键字(正则表达式)
-  --morehelp <OPTION>                      查看某个选项的详细帮助信息
+  --key-text-file <key-text-file>          Set the kid-key file, the program will search the KEY with KID from the file.(Very 
+                                           large file are not recommended)
+  --decryption-binary-path <PATH>          Full path to the tool used for MP4 decryption, like C:\Tools\mp4decrypt.exe
+  --use-shaka-packager                     Use shaka-packager instead of mp4decrypt to decrypt [default: False]
+  --mp4-real-time-decryption               Decrypt MP4 segments in real time [default: False]
+  -R, --max-speed <SPEED>                  Set speed limit, Mbps or Kbps, for example: 15M 100K.
+  -M, --mux-after-done <OPTIONS>           When all works is done, try to mux the downloaded streams. Use "--morehelp 
+                                           mux-after-done" for more details
+  --custom-hls-method <METHOD>             Set HLS encryption method 
+                                           (AES_128|AES_128_ECB|CENC|CHACHA20|NONE|SAMPLE_AES|SAMPLE_AES_CTR|UNKNOWN)
+  --custom-hls-key <FILE|HEX|BASE64>       Set the HLS decryption key. Can be file, HEX or Base64
+  --custom-hls-iv <FILE|HEX|BASE64>        Set the HLS decryption iv. Can be file, HEX or Base64
+  --use-system-proxy                       Use system default proxy [default: True]
+  --custom-proxy <URL>                     Set web request proxy, like http://127.0.0.1:8888
+  --custom-range <RANGE>                   Download only part of the segments. Use "--morehelp custom-range" for more details
+  --task-start-at <yyyyMMddHHmmss>         Task execution will not start before this time
+  --live-perform-as-vod                    Download live streams as vod [default: False]
+  --live-real-time-merge                   Real-time merge into file when recording live [default: False]
+  --live-keep-segments                     Keep segments when recording a live (liveRealTimeMerge enabled) [default: True]
+  --live-pipe-mux                          Real-time muxing to TS file through pipeline + ffmpeg (liveRealTimeMerge enabled) 
+                                           [default: False]
+  --live-fix-vtt-by-audio                  Correct VTT sub by reading the start time of the audio file [default: False]
+  --live-record-limit <HH:mm:ss>           Recording time limit when recording live
+  --live-wait-time <SEC>                   Manually set the live playlist refresh interval
+  --live-take-count <NUM>                  Manually set the number of segments downloaded for the first time when recording live 
+                                           [default: 16]
+  --mux-import <OPTIONS>                   When MuxAfterDone enabled, allow to import local media files. Use "--morehelp 
+                                           mux-import" for more details
+  -sv, --select-video <OPTIONS>            Select video streams by regular expressions. Use "--morehelp select-video" for more 
+                                           details
+  -sa, --select-audio <OPTIONS>            Select audio streams by regular expressions. Use "--morehelp select-audio" for more 
+                                           details
+  -ss, --select-subtitle <OPTIONS>         Select subtitle streams by regular expressions. Use "--morehelp select-subtitle" for 
+                                           more details
+  -dv, --drop-video <OPTIONS>              Drop video streams by regular expressions.
+  -da, --drop-audio <OPTIONS>              Drop audio streams by regular expressions.
+  -ds, --drop-subtitle <OPTIONS>           Drop subtitle streams by regular expressions.
+  --ad-keyword <REG>                       Set URL keywords (regular expressions) for AD segments
+  --morehelp <OPTION>                      Set more help info about one option
   --version                                Show version information
   -?, -h, --help                           Show help and usage information
 ```
 
 <details>
-<summary>点击查看More Help</summary> 
+<summary>More Help</summary> 
 
 ```
-More Help:
-
-  --mux-after-done
-
-所有工作完成时尝试混流分离的音视频. 你能够以:分隔形式指定如下参数:
-
-* format=FORMAT: 指定混流容器 mkv, mp4
-* muxer=MUXER: 指定混流程序 ffmpeg, mkvmerge (默认: ffmpeg)
-* bin_path=PATH: 指定程序路径 (默认: 自动寻找)
-* skip_sub=BOOL: 是否忽略字幕文件 (默认: false)
-* keep=BOOL: 混流完成是否保留文件 true, false (默认: false)
-
-例如:
-# 混流为mp4容器
--M format=mp4
-# 使用mkvmerge, 自动寻找程序
--M format=mkv:muxer=mkvmerge
-# 使用mkvmerge, 自定义程序路径
--M format=mkv:muxer=mkvmerge:bin_path="C\:\Program Files\MKVToolNix\mkvmerge.exe"
-```
-```
-More Help:
-
-  --mux-import
-
-混流时引入外部媒体文件. 你能够以:分隔形式指定如下参数:
-
-* path=PATH: 指定媒体文件路径
-* lang=CODE: 指定媒体文件语言代码 (非必须)
-* name=NAME: 指定媒体文件描述信息 (非必须)
-
-例如:
-# 引入外部字幕
---mux-import path=zh-Hans.srt:lang=chi:name="中文 (简体)"
-# 引入外部音轨+字幕
---mux-import path="D\:\media\atmos.m4a":lang=eng:name="English Description Audio" --mux-import path="D\:\media\eng.vtt":lang=eng:name="English (Description)"
-```
-```
+./m3u8DL --morehelp select-video
 More Help:
 
   --select-video
 
-通过正则表达式选择符合要求的视频流. 你能够以:分隔形式指定如下参数:
+Select video streams by regular expressions. OPTIONS is a colon separated list of:
 
 id=REGEX:lang=REGEX:name=REGEX:codecs=REGEX:res=REGEX:frame=REGEX
 segsMin=number:segsMax=number:ch=REGEX:range=REGEX:url=REGEX
-plistDurMin=hms:plistDurMax=hms:for=FOR
+plistDurMin=hms:plistDurMax=hms:bwMin=int:bwMax=int:role=string:for=FOR
 
-* for=FOR: 选择方式. best[number], worst[number], all (默认: best)
+* for=FOR: Select type. best[number], worst[number], all (Default: best)
 
-例如:
-# 选择最佳视频
+Examples: 
+# select best video
 -sv best
-# 选择4K+HEVC视频
+# select 4K+HEVC video
 -sv res="3840*":codecs=hvc1:for=best
-# 选择长度大于1小时20分钟30秒的视频
+# Select best video with duration longer than 1 hour 20 minutes 30 seconds
 -sv plistDurMin="1h20m30s":for=best
+-sv role="main":for=best
+# Select video with bandwidth between 800Kbps and 1Mbps
+-sv bwMin=800:bwMax=1000
 ```
-```
-More Help:
-
-  --select-audio
-
-通过正则表达式选择符合要求的音频流. 参考 --select-video
-
-例如:
-# 选择所有音频
--sa all
-# 选择最佳英语音轨
--sa lang=en:for=best
-# 选择最佳的2条英语(或日语)音轨
--sa lang="ja|en":for=best2
-```
-```
-More Help:
-
-  --select-subtitle
-
-通过正则表达式选择符合要求的字幕流. 参考 --select-video
-
-例如:
-# 选择所有字幕
--ss all
-# 选择所有带有"中文"的字幕
--ss name="中文":for=all
-```
-```
-More Help:
-
-  --custom-range
-
-下载点播内容时, 仅下载部分分片.
-
-例如:
-# 下载[0,10]共11个分片
---custom-range 0-10
-# 下载从序号10开始的后续分片
---custom-range 10-
-# 下载前100个分片
---custom-range -99
-# 下载第5分钟到20分钟的内容
---custom-range 05:00-20:00
-```
-
 </details>
 
-
-
-
-# 运行截图
-
-## 点播
+# Screenshots
 
 ![RE1](img/RE.gif)
 
-还可以并行下载+自动混流
+Parallel downloads + auto-mixing
 
 
 ![RE2](img/RE2.gif)
 
-## 直播
+## Live broadcast
 
-录制TS直播源：
+Record a TS live feed:
 
-[click to show gif](http://pan.iqiyi.com/file/paopao/W0LfmaMRvuA--uCdOpZ1cldM5JCVhMfIm7KFqr4oKCz80jLn0bBb-9PWmeCFZ-qHpAaQydQ1zk-CHYT_UbRLtw.gif)
+[click to show](http://pan.iqiyi.com/file/paopao/W0LfmaMRvuA--uCdOpZ1cldM5JCVhMfIm7KFqr4oKCz80jLn0bBb-9PWmeCFZ-qHpAaQydQ1zk-CHYT_UbRLtw.gif)
 
-录制MPD直播源：
+Record a live MPD feed:
 
-[click to show gif](http://pan.iqiyi.com/file/paopao/nmAV5MOh0yIyHhnxdgM_6th_p2nqrFsM4k-o3cUPwUa8Eh8QOU4uyPkLa_BlBrMa3GBnKWSk8rOaUwbsjKN14g.gif)
+[click to show](http://pan.iqiyi.com/file/paopao/nmAV5MOh0yIyHhnxdgM_6th_p2nqrFsM4k-o3cUPwUa8Eh8QOU4uyPkLa_BlBrMa3GBnKWSk8rOaUwbsjKN14g.gif)
 
-录制过程中，借助ffmpeg完成对音视频的实时混流
+Real-time mixing of audio and video with the help of ffmpeg during the recording process.
 ```
 ffmpeg -readrate 1 -i 2022-09-21_19-54-42_V.mp4 -i 2022-09-21_19-54-42_V.chi.m4a -c copy 2022-09-21_19-54-42_V.ts
 ```
-在新版本(>=v0.1.5)中，可以尝试开启 `live-pipe-mux` 来代替以上命令
+In newer versions (>=v0.1.5), try turning on `live-pipe-mux` instead of the above command
 
-**特别注意：如果网络环境不够稳定，请不要开启 `live-pipe-mux`。管道内数据读取由 ffmpeg 负责，在某些环境下容易丢失直播数据**
+**Special Note: If the network environment is not stable enough, please do not enable `live-pipe-mux`. In-pipe data reading is handled by ffmpeg, which is prone to losing live data in some environments**.
 
-在新版本(>=v0.1.8)中，能够通过设置环境变量 `RE_LIVE_PIPE_OPTIONS` 来改变 `live-pipe-mux` 时 ffmpeg 的某些选项： https://github.com/nilaoda/N_m3u8DL-RE/issues/162#issuecomment-1592462532
-
-## 赞助
+## Donations
 
 <a href="https://www.buymeacoffee.com/nilaoda" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
