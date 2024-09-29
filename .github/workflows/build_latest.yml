@@ -26,17 +26,17 @@ jobs:
 
   build-linux-x64:
     runs-on: ubuntu-latest
-    container: ubuntu:24.04
+    container: ubuntu:18.04
 
     steps:
-      - run: apt update
-      - run: apt install -y curl wget
+      - run: apt-get update
+      - run: apt-get install -y curl wget
       - uses: actions/checkout@v1
       - name: Set up dotnet
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ env.DOTNET_SDK_VERSION }}
-      - run: apt install -y libicu-dev libcurl4-openssl-dev zlib1g-dev libkrb5-dev
+      - run: apt-get install -y libicu-dev libcurl4-openssl-dev zlib1g-dev libkrb5-dev
       - run: dotnet publish src/N_m3u8DL-RE -r linux-x64 -c Release -o artifact
 
       - name: Upload Artifact[linux-x64]
