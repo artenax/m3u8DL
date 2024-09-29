@@ -1,17 +1,15 @@
 # N_m3u8DL-RE
-跨平台的DASH/HLS/MSS下载工具。支持点播、直播(DASH/HLS)。
+Cross-platform DASH/HLS/MSS download tool. Supports on-demand and live streaming (DASH/HLS).
 
 [![img](https://img.shields.io/github/stars/nilaoda/N_m3u8DL-RE?label=%E7%82%B9%E8%B5%9E)](https://github.com/nilaoda/N_m3u8DL-RE)  [![img](https://img.shields.io/github/last-commit/nilaoda/N_m3u8DL-RE?label=%E6%9C%80%E8%BF%91%E6%8F%90%E4%BA%A4)](https://github.com/nilaoda/N_m3u8DL-RE)  [![img](https://img.shields.io/github/release/nilaoda/N_m3u8DL-RE?label=%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC)](https://github.com/nilaoda/N_m3u8DL-RE/releases)  [![img](https://img.shields.io/github/license/nilaoda/N_m3u8DL-RE?label=%E8%AE%B8%E5%8F%AF%E8%AF%81)](https://github.com/nilaoda/N_m3u8DL-RE)   [![img](https://img.shields.io/github/downloads/nilaoda/N_m3u8DL-RE/total?label=%E4%B8%8B%E8%BD%BD%E9%87%8F)](https://github.com/nilaoda/N_m3u8DL-RE/releases)
 
-
-遇到 BUG 请首先确认软件是否为最新版本（如果是 Release 版本，建议到 [Actions](https://github.com/nilaoda/N_m3u8DL-RE/actions) 页面下载最新自动构建版本后查看问题是否已经被修复），如果确认版本最新且问题依旧存在，可以到 [Issues](https://github.com/nilaoda/N_m3u8DL-RE/issues) 中查找是否有人遇到过相关问题，没有的话再进行询问。
-
+If you encounter a bug, first check if the software is the latest version (if it is a Release version, we recommend downloading the latest autobuild version from the [Actions](https://github.com/nilaoda/N_m3u8DL-RE/actions) page to see if the problem has been fixed). If you make sure the version is up to date and the problem still exists, you can go to the [Issues](https://github.com/nilaoda/N_m3u8DL-RE/issues) section to see if anyone else has encountered it, and then ask again if no one has mentioned your problem.
 
 ---
 
-版本较低的Windows系统自带的终端可能不支持本程序，替代方案：在 [cmder](https://github.com/cmderdev/cmder) 中运行。
+Terminal in older Windows versions, may not support this program, alternative: run it in [cmder](https://github.com/cmderdev/cmder).
 
-Arch Linux 可以从 AUR 获取：[n-m3u8dl-re-bin](https://aur.archlinux.org/packages/n-m3u8dl-re-bin)、[n-m3u8dl-re-git](https://aur.archlinux.org/packages/n-m3u8dl-re-git)
+Arch Linux package is available from AUR：[n-m3u8dl-re-bin](https://aur.archlinux.org/packages/n-m3u8dl-re-bin)、[n-m3u8dl-re-git](https://aur.archlinux.org/packages/n-m3u8dl-re-git)
 
 ```bash
 # Arch Linux 及其衍生版安装 N_m3u8DL-RE 发行版 (该源非本人维护)
